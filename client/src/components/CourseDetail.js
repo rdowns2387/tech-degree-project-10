@@ -1,17 +1,3 @@
-/************************************************************************
-Treehouse FSJS Techdegree:
-Project 10 - Full Stack App with React and a REST API
-Name: Snir Holland
-Date: 01/10/2019
-
->>> Component: CourseDetails <<<
-
-Retrieves the detail for a course from the REST API,
-renders the course details, an "Update Course" button for navigating to
-the "Update Course" screen, and a "Delete Course" button for navigating to
-the "Delete Course" screen.
-************************************************************************/
-
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -25,11 +11,11 @@ class CourseDetail extends Component {
     componentDidMount() {
         const { context } = this.props;
         context.data.getCourse(this.props.match.params.id)
-            .then( (data) => {   // a course has been successfully fetched.
+            .then( (data) => {
                 this.setState({ courseDetail: data })
                 this.setState({ userDetail: data.User })
             })
-            .catch( (error) => {  // an error has been occoured.
+            .catch( (error) => {
                 const path = (error.name === 'notFound') ? "/notfound" : "/error";
                 this.props.history.push(path);
             });
@@ -41,8 +27,10 @@ class CourseDetail extends Component {
         const {firstName, lastName} = this.state.userDetail;
         const {context} = this.props;
 
+        //react markdown to format materials needed and description text
+        const ReactMarkdown = require('react-markdown/with-html');
+
         return (
-            //display update and delete buttons if a user is logged in
             <React.Fragment>
                 <div className="actions--bar">
                     <div className="bounds">
@@ -81,32 +69,23 @@ class CourseDetail extends Component {
                         </div>
 
                         <div className="course--description">
-                             <p> {description} </p>
+                             <ReactMarkdown source={description} />
                         </div>
                     </div>
 
                     <div className="grid-25 grid-right">
                         <div className="course--stats">
                             <ul className="course--stats--list">
-
-                                {/* Estimated time of the course will be shown only if it exists */}
-                                { estimatedTime !== null && estimatedTime !== '' &&
                                     <li className="course--stats--list--item">
                                         <h4>Estimated Time</h4>
                                         <h3> {estimatedTime} </h3>
                                     </li>
-                                }
-
-                                {/* Materials needed for the course will be shown only if they exist */}
-                                { materialsNeeded !== null && materialsNeeded !== '' &&
                                     <li className="course--stats--list--item">
                                         <h4>Materials Needed</h4>
                                         <ul>
-                                            <li>{materialsNeeded} </li>
+                                            <ReactMarkdown source={materialsNeeded} />
                                         </ul>
                                     </li>
-                                }
-
                             </ul>
                         </div>
                     </div>

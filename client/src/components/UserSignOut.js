@@ -1,11 +1,13 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-const SignOut = ({context}) => {
+
+// signs the user out and takes them back to the home page / courses screen
+const UserSignOut = ({context}) => {
     context.actions.signOut();
     return(
         <Redirect to="/" />
     );
 }
 
-export default SignOut;
+export default UserSignOut;

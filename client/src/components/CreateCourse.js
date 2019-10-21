@@ -1,17 +1,3 @@
-/**************************************************************
-Treehouse FSJS Techdegree:
-Project 10 - Full Stack App with React and a REST API
-Name: Snir Holland
-Date: 01/10/2019
-
->>> Component: CreateCourse <<<
-
-Renders a form allowing a user to create a new course, a "Create Course"
-button that when clicked sends a POST request to the REST API's
-/api/courses route, and a "Cancel" button that returns the user
-to the default route (i.e. the list of courses).
-***************************************************************/
-
 import React,{Component} from 'react';
 
 class CreateCourse extends Component {
@@ -24,7 +10,7 @@ class CreateCourse extends Component {
         errors: []
     };
 
-    // methods that respond to changes in the component state.
+    // handle changes in state according to user inputs
     handleTitleChange = (e) => {
         this.setState({title: e.target.value})
     }
@@ -38,7 +24,7 @@ class CreateCourse extends Component {
         this.setState({materialsNeeded: e.target.value})
     }
 
-    // this method respond to the "Create Course" button click event handler.
+    // send user inputs to database to create the new course
     handleSubmit = (e) => {
         e.preventDefault();
         const {title,description,estimatedTime,materialsNeeded} = this.state;
@@ -50,9 +36,9 @@ class CreateCourse extends Component {
 
         context.data.createCourse(body, emailAddress, password)
             .then( (errors) => {
-                if (errors.length)   // validation errors have been found.
+                if (errors.length)
                     this.setState({errors});
-                else {  // the new course has been created successfully.
+                else {
                     this.props.history.push("/");
                     console.log('Course has been successfully created.');
                 }
@@ -63,7 +49,7 @@ class CreateCourse extends Component {
             });
     }
 
-    // this method redirects back to the home page (list of courses)
+    // cancel button to redirect users back to homepage
     handleCancel = (e) => {
         e.preventDefault();
         this.props.history.push("/");
@@ -74,8 +60,6 @@ class CreateCourse extends Component {
         return (
             <div className="bounds course--detail">
                 <h1>Create Course</h1>
-
-                {/* Validation errors will be showed only if exist. */}
                 {errors.length > 0 &&
                     <div className="validation-errors">
                         <h2 className="validation--errors--label"> Validation Errors : </h2>
@@ -100,7 +84,6 @@ class CreateCourse extends Component {
                                 value={title}
                                 onChange={this.handleTitleChange}
                             />
-                            <p>By Joe Smith</p>
                         </div>
                         <div className="course--description">
                             <textarea

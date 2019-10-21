@@ -98,7 +98,6 @@ router.post('/users', asyncHandler(async(req, res) => {
       //hash the password when user is created
       password: bcryptjs.hashSync(requestData.password)
     })
-
     res.status(201).location('/').end();
   } else {
     res.status(400).json({errors}).end();
@@ -153,9 +152,9 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res)=> {
   const errors = [];
   const requestData = req.body;
 
-  if(!requestData.id){
-    errors.push('You must have a value for the course id');
-  }
+  // if(!requestData.id){
+  //   errors.push('You must have a value for the course id');
+  // }
 
   if(!requestData.description){
     errors.push('You must have a value for the course description');
@@ -202,6 +201,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next)
     })
     res.status(204).end();
   } else {
+    console.log('something went wrong')
     res.status(400).json({errors}).end();
   }
 }));

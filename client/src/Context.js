@@ -36,7 +36,7 @@ export class Provider extends Component {
     );
   }
 
-  // this method get an email address and a password and signs in the user.
+  // signs in user
   signIn = async (emailAddress, password) => {
     this.setState({originalPassword: password});
     const userData = await this.data.getUser(emailAddress,password);  // get user details
@@ -53,7 +53,7 @@ export class Provider extends Component {
     return userData;
   }
 
-  // this signs out the authenticated user.
+  // signs out the user
   signOut = () => {
     this.setState({
       authenticatedUser: null,
@@ -65,12 +65,6 @@ export class Provider extends Component {
 }
 
 export const Consumer = Context.Consumer;
-
-/**
- * A higher-order component that wraps the provided component in a Context Consumer component.
- * @param {class} Component - A React component.
- * @returns {function} A higher-order component.
- */
 
 export default function withContext(Component) {
   return function ContextComponent(props) {

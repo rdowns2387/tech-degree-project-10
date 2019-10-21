@@ -10,8 +10,8 @@ class Courses extends Component {
     componentDidMount() {
         const { context } = this.props;
         context.data.getCourses()
-            .then( (data) => this.setState({ courses: data })) // courses have been successfully fetched.
-            .catch( (error) => {   // an error has been occoured.
+            .then( (data) => this.setState({ courses: data }))
+            .catch( (error) => {  
                 const path = (error.name === 'notFound') ? "/notfound" : "/error";
                 this.props.history.push(path);
             });

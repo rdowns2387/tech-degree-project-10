@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true
     },
     userId: {
       type: Sequelize.STRING,
@@ -17,15 +18,18 @@ module.exports = (sequelize) => {
     },
     title: {
       type: Sequelize.STRING,
+      allowNull: false
     },
     description: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     estimatedTime: {
       type: Sequelize.INTEGER,
+      allowNull: true
     },
     materialsNeeded: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
+      allowNull: true
     },
   }, { sequelize }); //same as {sequelize: sequelize}
 

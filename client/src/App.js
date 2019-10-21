@@ -1,61 +1,50 @@
-import './styles/global.css';
-
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import UserSignIn from './components/UserSignIn';
+import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import SignOut from './components/SignOut';
 import UpdateCourse from './components/UpdateCourse';
-import NotFound from './components/NotFound';
-
-//Context!
+import DeleteCourse from './components/DeleteCourse';
+import UserSignOut from './components/UserSignOut';
 import withContext from './Context';
-
-//Private Routes
 import PrivateRoute from './PrivateRoute';
+import './css/global.css';
 
-
-
-
-
-
-// allow components to consume API Context
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
-// const DeleteCourseWithContext = withContext(DeleteCourse);
-const SignUpWithContext = withContext(SignUp);
-const SignInWithContext = withContext(SignIn);
-const SignOutWithContext = withContext(SignOut);
+const DeleteCourseWithContext = withContext(DeleteCourse);
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 class App extends Component {
-  render() {
+  render () {
     return (
-    <BrowserRouter>
-      <div id="root">
-        <div>
-          <HeaderWithContext />
-          <Switch>
-            <Route exact path='/' component={ CoursesWithContext }/>
-            <Route path='/courses/:id' component={CourseDetailWithContext} />
-            <Route path='/courses/create' component={CreateCourseWithContext} />
-            <Route path='/signup' component={SignUpWithContext} />
-            <Route path='/signin' component={SignInWithContext} />
-            <Route path='/signout' component={SignOutWithContext} />
-            <PrivateRoute path='/courses/:id/update' component={UpdateCourseWithContext} />
-            <Route path='/notfound' component={NotFound}/>
-            <Redirect to ='/notfound'/>
-          </Switch>
+      <BrowserRouter>
+        <div id="root">
+          <div>
+            <HeaderWithContext />
+            <Switch>
+              <Route exact path="/" component={CoursesWithContext}/>
+              <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
+              <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
+              <PrivateRoute path="/courses/:id/delete" component={DeleteCourseWithContext} />
+              <Route path="/courses/:id" component={CourseDetailWithContext} />
+              <Route path="/signin" component={UserSignInWithContext} />
+              <Route path="/signup" component={UserSignUpWithContext} />
+              <Route path="/signout" component={UserSignOutWithContext} />
+              <Redirect to="/notfound"/>
+            </Switch>
+          </div>
         </div>
-      </div>
       </BrowserRouter>
-  );
+    );
   }
 }
 

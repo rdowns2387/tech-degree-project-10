@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-class SignIn extends Component {
+class UserSignIn extends Component {
 
     state = {
         emailAddress: '',
@@ -9,7 +9,6 @@ class SignIn extends Component {
         errors: []
     };
 
-    // methods that respond to changes in the component state.
     handleEmailAddressChange = (e) => {
         this.setState({emailAddress: e.target.value});
     }
@@ -17,7 +16,6 @@ class SignIn extends Component {
         this.setState({password: e.target.value});
     }
 
-    // this method respond to the "Sign In" button click event handler.
     handleSubmit = (e) => {
         e.preventDefault();
         const { context } = this.props;
@@ -43,7 +41,6 @@ class SignIn extends Component {
 
     }
 
-    // this method redirects back to the home page (list of courses)
     handleCancel = (e) => {
         e.preventDefault();
         this.props.history.push("/");
@@ -56,7 +53,6 @@ class SignIn extends Component {
                 <div className="grid-33 centered signin">
                     <h1>Sign In</h1>
 
-                    {/* Validation errors will be showed only if exist. */}
                     {errors.length > 0 &&
                         <div className="validation-errors">
                             <div>
@@ -111,4 +107,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default UserSignIn;

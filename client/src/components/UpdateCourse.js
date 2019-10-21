@@ -1,17 +1,3 @@
-/******************************************************************************
-Treehouse FSJS Techdegree:
-Project 10 - Full Stack App with React and a REST API
-Name: Snir Holland
-Date: 01/10/2019
-
->>> Component: UpdateCourse <<<
-
-Renders a form allowing a user to update one of their existing courses, an
-"Update Course" button that when clicked sends a PUT request to the REST
-API's /api/courses/:id route, and a "Cancel" button that returns the
-user to the "Course Detail" screen.
-********************************************************************************/
-
 import React,{Component} from 'react';
 
 class UpdateCourse extends Component {
@@ -22,14 +8,15 @@ class UpdateCourse extends Component {
         const authUserID = context.authenticatedUser.id;
         context.data.getCourse(pathID)
             .then( (data) => {
-                if (authUserID !== data.User.id) // authenticated user doesn't own the course
+                if (authUserID !== data.User.id)
                     this.props.history.push("/forbidden");
-                else {  // authenticated user owns the course
+                else {
                     const {id,title,description,estimatedTime,materialsNeeded} = data;
                     this.setState({ id,title,description,estimatedTime,materialsNeeded });
+                    console.log(data);
                 }
             })
-            .catch( (error) => {  // errors have been found
+            .catch( (error) => {
                 const path = (error.name === 'notFound') ? "/notfound" : "/error";
                 this.props.history.push(path);
             });
@@ -44,7 +31,6 @@ class UpdateCourse extends Component {
         errors: []
     };
 
-    // methods that respond to changes in the component state.
     handleTitleChange = (e) => {
         this.setState({title: e.target.value})
     }
@@ -58,7 +44,6 @@ class UpdateCourse extends Component {
         this.setState({materialsNeeded: e.target.value})
     }
 
-    // this method respond to the "Update Course" button click event handler.
     handleSubmit = (e) => {
         e.preventDefault();
         const {id,title,description,estimatedTime,materialsNeeded} = this.state;
@@ -70,20 +55,16 @@ class UpdateCourse extends Component {
 
         context.data.updateCourse(id, body, emailAddress, password)
             .then( (errors) => {
-                if (errors.length)  // validation errors have been found.
-                    this.setState({errors});
-                else {    // the course has been successfully updated.
+                    console.log(errors);
                     this.props.history.push("/");
                     console.log('Course has been successfully updated.');
-                }
             })
-            .catch( (error) => {  // errors which are not validation-related have been found.
+            .catch( (error) => {
                 console.log(error);
                 this.props.history.push('/error');
             });
     }
 
-    // this method redirects back to the home page (list of courses)
     handleCancel = (e) => {
         e.preventDefault();
         this.props.history.push(`/courses/${this.state.id}`);
@@ -97,7 +78,6 @@ class UpdateCourse extends Component {
             <div className="bounds course--detail">
                 <h1>Update Course</h1>
 
-                {/* Validation errors will be showed only if exist. */}
                 {errors.length > 0 &&
                     <div className="validation-errors">
                         <h2 className="validation--errors--label"> Validation Errors : </h2>
