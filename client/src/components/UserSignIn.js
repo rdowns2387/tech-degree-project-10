@@ -24,17 +24,17 @@ class UserSignIn extends Component {
 
         context.actions.signIn(emailAddress,password)
             .then( (userData) => {
-                if (userData === null) {  // user hasn't been authenticated.
+                if (userData === null) {
                     this.setState( () => {
                         return {errors: [ 'Sign-in was unsuccessful' ]};
                     });
                 }
-                else {  // user has been authenticated.
-                    this.props.history.push(from);   // go back to the last page visited befor sign-in
+                else {
+                    this.props.history.push(from);
                     console.log(`SUCCESS! ${userData.emailAddress} is now signed in!`);
                 }
             })
-            .catch( (err) => {  // unexpected error has been found.
+            .catch( (err) => {  
                 console.log(err);
                 this.props.history.push('/error');
             })
