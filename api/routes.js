@@ -152,9 +152,9 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res)=> {
   const errors = [];
   const requestData = req.body;
 
-  // if(!requestData.id){
-  //   errors.push('You must have a value for the course id');
-  // }
+  if(!requestData.title){
+    errors.push('You must have a value for the Course Title');
+  }
 
   if(!requestData.description){
     errors.push('You must have a value for the course description');
@@ -180,6 +180,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next)
   //validate mandatory data is present
   const errors = [];
   const courseContent = req.body;
+  const course = await Course.findByPk(req.params.id);
   console.log(courseContent);
 
   if(!courseContent.title){
@@ -189,7 +190,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next)
     errors.push('You must provide a value for "description"');
   }
 
-  const course = await Course.findByPk(courseContent.id);
+
 
   if(errors.length == 0){
     await course.update({
